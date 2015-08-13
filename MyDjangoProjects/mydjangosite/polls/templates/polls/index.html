@@ -1,0 +1,29 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+<h1> Latest Questions </h1>
+{% if latest_question_list %}
+    <!--<ul>
+    {% for question in latest_question_list %}
+        <li class="boxx"><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        <!--<input type="radio" name="q{{ question.id }}"><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></input>
+		<br/>
+		{% endfor %}
+    </ul>-->
+	<table>
+		<thead>
+			<th class="hboxx"> Questions </th>
+			<th class="hboxx"> Published recently? </th>
+		</thead>
+		<tbody>
+		{% for question in latest_question_list %}
+			<tr>
+				<td class="boxx"><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+				<td id="recent" class="boxx">{{ question.was_published_recently }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+    </table>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

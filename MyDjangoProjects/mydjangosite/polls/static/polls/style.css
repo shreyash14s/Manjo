@@ -1,0 +1,76 @@
+a {
+	color: #33691E;
+}
+a:link {
+    text-decoration: none;
+	/*background-color: #B2FF99;*/
+}
+a:visited {
+    text-decoration: none;
+	/*background-color: #FFFF85;*/
+}
+a:hover {
+    text-decoration: underline;
+	/*background-color: #FF704D;*/
+}
+a:active {
+    text-decoration: underline;
+	/*background-color: #FF704D;*/
+}
+body {
+	background: white url("images/background.gif") no-repeat right bottom;
+}
+h1 {
+	color: #F1F8E9;
+	background-color: #8BC34A;
+	padding-left: 20px;
+	padding: 10px
+}
+ul {
+    list-style-type: none;
+    padding-left: 10px;
+}
+li {
+	padding: 10px;
+	border-collapse: collapse;
+}
+th, td, .boxx, .hboxx {
+	color: #33691E;
+	border-width: 0px;
+	border-style: solid;
+	border-color: #33691E;
+	border-collapse: collapse;
+    background-color: #DCEDC8;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.hboxx {
+	background-color: #9CCC65;
+}
+#recent {
+	text-align: center;
+}
+/* The animation code */
+@keyframes example {
+    from {padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;}
+    to {padding: 20px;
+	padding-left: 10px;
+	padding-right: 10px;}
+}
+td {
+	-webkit-transition: padding 0.5s; /* Chrome and Safari */
+    transition: padding 0.5s;
+	-moz-transition: padding 0.5s; /* Firefox 4 */
+}
+td:hover {
+	/*height: 60px;*/
+	padding: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	/*
+	animation-name: example;
+	animation-duration: 1s;*/
+}
