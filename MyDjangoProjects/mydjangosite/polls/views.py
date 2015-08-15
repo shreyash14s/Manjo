@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 
 # Create your views here.
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -57,18 +57,45 @@ def vote(request, question_id):
 class IndexView(generic.ListView):
 	template_name = 'polls/index.html'
 	context_object_name = 'latest_question_list'
-
+	
+	#votes = [sum([choice.votes for choice in question.choice_set.all()]) for question in Question.objects.all()]
+	#print(votes)
+	
 	#def get_queryset(self):
 	#	"""Return the last five published questions."""
 	#	return Question.objects.order_by('-pub_date')[:5]
-	def get_queryset(self):
+	def get_queryset(self, order='-pub_date'):
 		"""
 		Return the last five published questions (not including those set to be
 		published in the future).
-		"""
+		
 		return Question.objects.filter(
 			pub_date__lte=timezone.now()
 		).order_by('-pub_date')[:5]
+		"""
+		ques = Question.objects.filter(
+			pub_date__lte=timezone.now()
+		).order_by('-pub_date', order)[:5]
+		self.questions = []
+		for i in ques:
+			t = (i, sum([c.votes for c in i.choice_set.all()]), )
+			self.questions.append(t)
+		return ques
+	
+	def get(self, request, *args, **kwargs):
+		#self.votes = [sum([choice.votes for choice in question.choice_set.all]) for question in Question.objects.all()]
+		#print(self.votes)
+		context = locals()
+		order = request.GET.get('order_by', 'question_text')
+		if order != "votes":
+			self.get_queryset(order)
+		else:
+			self.get_queryset()
+			self.questions.sort(key=lambda x: x[1])
+		context['latest_question_list'] = self.questions
+		#context['votes'] = self.votes
+		return render_to_response(self.template_name, context, context_instance=RequestContext(request))
+
 
 class DetailView(generic.DetailView):
 	model = Question

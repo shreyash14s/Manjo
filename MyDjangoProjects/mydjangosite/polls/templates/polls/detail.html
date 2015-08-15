@@ -1,14 +1,35 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+<script>
+function A(chk) {
+	{% for i in question.choice_set.all %}
+    if ( document.getElementById("choice{{ forloop.counter }}").checked) {
+		document.getElementById("td{{ forloop.counter }}").style.backgroundColor="#AED581";
+    } else {
+		document.getElementById("td{{ forloop.counter }}").style.backgroundColor="#DCEDC8";
+	}
+	{% endfor %}
+}
+</script>
+
 <h1>{{ question.question_text }}</h1>
-<!--ul-->
+<div class="linkboxx"> <a href="{% url 'polls:index' %}"> Home </a></div><br/><br/>
+
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url 'polls:vote' question.id %}" method="post">
 {% csrf_token %}
+<table>
 {% for choice in question.choice_set.all %}
-    <!--<li>{{ choice.choice_text }}</li>-->
-	<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"/><!--{{ choice.choice_text }}</input><br/><br/-->
-	<label for="choice{{ forloop.counter }}">{{ choice.choice_text }} </label><br/>
+	<tr>
+		<td class="inputboxx" for="choice{{ forloop.counter }}" id="td{{ forloop.counter }}">
+			<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" onclick="A(this)"/>
+			<label for="choice{{ forloop.counter }}">{{ choice.choice_text }} </label><br/>
+		</td>
+	</tr>
 {% endfor %}
-<input type="submit" value="Vote"/>
+</table>
+<br/>
+<input class="btn" type="submit" value="Vote"/>
 </form>
-<!--/ul-->

@@ -1,25 +1,20 @@
 {% load staticfiles %}
-
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
 <h1> Latest Questions </h1>
 {% if latest_question_list %}
-    <!--<ul>
-    {% for question in latest_question_list %}
-        <li class="boxx"><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-        <!--<input type="radio" name="q{{ question.id }}"><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></input>
-		<br/>
-		{% endfor %}
-    </ul>-->
 	<table>
 		<thead>
-			<th class="hboxx"> Questions </th>
-			<th class="hboxx"> Published recently? </th>
+			<th class="hboxx"><a class="hboxx" href="?order_by=question_text"> Questions </a></th>
+			<th class="hboxx"><a class="hboxx" href="?order_by=pub_date"> Published recently? </a></th>
+			<th class="hboxx"><a class="hboxx" href="?order_by=votes"> Votes </a></th>
 		</thead>
 		<tbody>
-		{% for question in latest_question_list %}
+		{% for question, votes in latest_question_list %}
 			<tr>
-				<td class="boxx"><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-				<td id="recent" class="boxx">{{ question.was_published_recently }}</td>
+				<td class="mboxx"><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+				<td class="centerboxx">{{ question.was_published_recently }}</td>
+				<td class="centerboxx">{{ votes }}</td>
 			</tr>
 		{% endfor %}
 		</tbody>
