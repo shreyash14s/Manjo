@@ -1,5 +1,5 @@
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'polls/css/style.css' %}" />
 
 <h1> Latest Questions </h1>
 {% if latest_question_list %}
@@ -12,8 +12,14 @@
 		<tbody>
 		{% for question, votes in latest_question_list %}
 			<tr>
-				<td class="mboxx"><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-				<td class="centerboxx">{{ question.was_published_recently }}</td>
+				<td class="mboxx"><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></td>
+				<td class="centerboxx">
+					{% if question.was_published_recently %} 
+						<img src="{% static 'polls/img/icon-yes.gif' %}" alt="True"> 
+					{% else %} 
+						<img src="{% static 'polls/img/icon-no.gif' %}" alt="True"> 
+					{% endif %}
+				</td>
 				<td class="centerboxx">{{ votes }}</td>
 			</tr>
 		{% endfor %}
